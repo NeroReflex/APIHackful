@@ -1,8 +1,10 @@
 <?php
 
 
-namespace APIHackful;
+namespace APIHackful\Server;
 
+use APIHackful\DataDecoderTrait;
+use APIHackful\DataEncoderTrait;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 

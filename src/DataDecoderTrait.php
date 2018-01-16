@@ -21,6 +21,12 @@ trait DataDecoderTrait
         //decompress the binary unsafe compressed string
         $jsonEncoded = zlib_decode($data);
 
-        return json_decode($jsonEncoded, true);
+        $content = json_decode($jsonEncoded, true);
+
+        if (json_last_error() != JSON_ERROR_NONE) {
+            throw new \RuntimeException("The given data is not valid json content, json_decode error:" . json_last_error_msg());
+        }
+
+        return $content;
     }
 }
