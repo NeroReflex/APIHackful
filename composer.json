@@ -1,0 +1,21 @@
+{
+    "name": "neroreflex/apihackful",
+    "description": "An utility to perform RESTful API call with end-to-end encryption",
+    "type": "library",
+    "license": "Apache 2.0",
+    "authors": [
+        {
+            "name": "Denis Benato",
+            "email": "benato.denis96@gmail.com"
+        }
+    ],
+    "require": {
+        "ext-curl": "*",
+        "psr/http-message": "^1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "APIHackful\\": "src/"
+        }
+    }
+}
