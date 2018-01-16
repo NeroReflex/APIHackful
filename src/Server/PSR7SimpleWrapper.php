@@ -29,6 +29,12 @@ class PSR7SimpleWrapper
     use DataEncoderTrait;
     use DataDecoderTrait;
 
+    /**
+     * Read data from the HTTP Request.
+     *
+     * @param RequestInterface $request the HTTP request
+     * @return array the data contained into the HTTP request
+     */
     public static function readContent(RequestInterface &$request) : array
     {
         //rewind the body stream
