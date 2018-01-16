@@ -29,7 +29,7 @@ class PSR7SimpleWrapper
     use DataEncoderTrait;
     use DataDecoderTrait;
 
-    protected function readContent(RequestInterface &$request) : array
+    public static function readContent(RequestInterface &$request) : array
     {
         //rewind the body stream
         $request->getBody()->rewind();
@@ -40,9 +40,11 @@ class PSR7SimpleWrapper
         return static::unpack($requestContent);
     }
 
-    protected function writeContent(ResponseInterface &$response, array &$data)
+    public static function writeContent(ResponseInterface &$response, array &$data)
     {
         //write the encoded content
-        $response->getBody()->write(static::pack($data));
+        $writeResult = $response->getBody()->write(static::pack($data));
+
+        return $writeResult;
     }
 }
