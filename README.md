@@ -19,7 +19,7 @@ than write in your application startup file:
 define('APIHACKFUL_ENCRYPTION_KEY', "8jBsckIGj9XQ7rKIwk53NtbiyP2pH0qJgZKH8cICtr4=");
 ```
 
-obviously... DO NOT USE the provided example!
+obviously... DO __NOT__ USE THE EXAMPLE!
 
 ## WIP
 Not ready (yet).
