@@ -29,6 +29,7 @@ trait DataEncoderTrait
      * @param array $data the data to be passed to the RESTful server
      * @param string $key the encryption key
      * @return string the *unencoded* data to be passed to the RESTful server
+     * @throws \RuntimeException the error preventing data to be encoded
      */
     public static function pack(array $data, $key = "")
     {

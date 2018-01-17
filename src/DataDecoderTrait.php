@@ -29,6 +29,7 @@ trait DataDecoderTrait
      * @param string $data the data to be passed to the RESTful server
      * @param string $key the encryption key
      * @return array the *unencoded* data received from the RESTful server
+     * @throws \RuntimeException the error preventing data to be decoded
      */
     public static function unpack($data, $key = "") : array
     {
