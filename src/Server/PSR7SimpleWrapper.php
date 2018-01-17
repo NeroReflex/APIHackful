@@ -46,6 +46,11 @@ class PSR7SimpleWrapper
         return static::unpack($requestContent);
     }
 
+    /**
+     * @param ResponseInterface $response
+     * @param array $data
+     * @return int
+     */
     public static function writeContent(ResponseInterface &$response, array &$data)
     {
         //write the encoded content

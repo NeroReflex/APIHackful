@@ -14,9 +14,15 @@ limitations under the License.
 
 namespace APIHackful;
 
+/**
+ * The encryption algorithm.
+ *
+ * @author Denis Benato <beanto.denis96@gmail.com>
+ */
 trait EncryptionTrait
 {
     protected static $algorithm = 'aes-256-ctr';
+
 
     public static function encrypt($plain, $encryptionKey = "") : string
     {

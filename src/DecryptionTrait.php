@@ -14,10 +14,14 @@ limitations under the License.
 
 namespace APIHackful;
 
-
+/**
+ * The decryption algorithm.
+ *
+ * @author Denis Benato <beanto.denis96@gmail.com>
+ */
 trait DecryptionTrait
 {
-    public function decrypt($encrypted, $encryptionKey = "") : string
+    public static function decrypt($encrypted, $encryptionKey = "") : string
     {
         $encryptionKey = (strlen($encryptionKey) == 0) ? APIHACKFUL_ENCRYPTION_KEY : $encryptionKey;
 

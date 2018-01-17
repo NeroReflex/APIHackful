@@ -12,34 +12,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
  *****************************************************************************/
 
-namespace APIHackful;
+namespace APIHackful\CLI;
+
+use APIHackful\DataDecoderTrait;
+use APIHackful\DataEncoderTrait;
 
 /**
- * The data decoder trait.
+ * The barebone encoding algorithms implementation.
  *
  * @author Denis Benato <beanto.denis96@gmail.com>
  */
-trait DataDecoderTrait
+abstract class EncodingImplementation
 {
-    use DecryptionTrait;
-
-    /**
-     * Process data received by the server.
-     *
-     * @param string $data the data to be passed to the RESTful server
-     * @return array the *unencoded* data received from the RESTful server
-     */
-    public static function unpack($data) : array
-    {
-        //decompress the binary unsafe compressed string
-        $jsonEncoded = zlib_decode(static::decrypt($data));
-
-        $content = json_decode($jsonEncoded, true);
-
-        if (json_last_error() != JSON_ERROR_NONE) {
-            throw new \RuntimeException("The given data is not valid json content, json_decode error:" . json_last_error_msg());
-        }
-
-        return $content;
-    }
+    use DataEncoderTrait;
+    use DataDecoderTrait;
 }

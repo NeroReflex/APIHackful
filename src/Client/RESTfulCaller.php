@@ -17,19 +17,39 @@ namespace APIHackful\Client;
 use APIHackful\DataEncoderTrait;
 use APIHackful\DataDecoderTrait;
 
+/**
+ * The client basic implementation.
+ *
+ * @author Denis Benato <beanto.denis96@gmail.com>
+ */
 class RESTfulCaller
 {
     use DataEncoderTrait;
     use DataDecoderTrait;
 
+    /**
+     * @var string the HTTP Method
+     */
     protected $method = 'GET';
 
+    /**
+     * @var string the URI of the resource
+     */
     protected $uri = '/';
 
+    /**
+     * @var string the HTTP or HTTPS server
+     */
     protected $server = 'http://example.org';
 
+    /**
+     * @var array the received data
+     */
     protected $outData = [];
 
+    /**
+     * @var array data to be sent to the server on the request
+     */
     protected $inData = [];
 
     public function &withURI($uri)

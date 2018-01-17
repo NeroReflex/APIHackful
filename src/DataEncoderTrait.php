@@ -38,6 +38,6 @@ trait DataEncoderTrait
         $binaryCompressed = zlib_encode($jsonEncoded, ZLIB_ENCODING_GZIP, 9);
 
         //return the binary safe representation
-        return $binaryCompressed;
+        return static::encrypt($binaryCompressed);
     }
 }
