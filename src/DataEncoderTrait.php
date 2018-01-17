@@ -27,17 +27,22 @@ trait DataEncoderTrait
      * Prepare data to be sent to the server.
      *
      * @param array $data the data to be passed to the RESTful server
+     * @param string $key the encryption key
      * @return string the *unencoded* data to be passed to the RESTful server
      */
-    public static function pack(array $data)
+    public static function pack(array $data, $key = "")
     {
         //json encode the given array
         $jsonEncoded = json_encode($data);
 
         //binary compress the generated json
-        $binaryCompressed = zlib_encode($jsonEncoded, ZLIB_ENCODING_GZIP, 9);
+        $binaryCompressed = gzencode($jsonEncoded, 9);
+
+        if ($binaryCompressed === false) {
+            throw new \RuntimeException("Error encoding the given data");
+        }
 
         //return the binary safe representation
-        return static::encrypt($binaryCompressed);
+        return static::encrypt($binaryCompressed, $key);
     }
 }

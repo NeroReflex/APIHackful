@@ -27,12 +27,17 @@ trait DataDecoderTrait
      * Process data received by the server.
      *
      * @param string $data the data to be passed to the RESTful server
+     * @param string $key the encryption key
      * @return array the *unencoded* data received from the RESTful server
      */
-    public static function unpack($data) : array
+    public static function unpack($data, $key = "") : array
     {
         //decompress the binary unsafe compressed string
-        $jsonEncoded = zlib_decode(static::decrypt($data));
+        $jsonEncoded = gzdecode(static::decrypt($data, $key));
+
+        if ($jsonEncoded === false) {
+            throw new \RuntimeException("Error decoding the given data");
+        }
 
         $content = json_decode($jsonEncoded, true);
 

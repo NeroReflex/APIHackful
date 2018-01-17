@@ -23,11 +23,27 @@ trait EncryptionTrait
 {
     protected static $algorithm = 'aes-256-ctr';
 
-
+    /**
+     * Encrypt a message that will be decrypted using the library
+     * decryption function.
+     *
+     * @param string $plain the plain text message
+     * @param string $encryptionKey the base64 encryption key
+     * @return string the encrypted message
+     */
     public static function encrypt($plain, $encryptionKey = "") : string
     {
+        if (!is_string($plain)) {
+            throw new \InvalidArgumentException("The plain message is not a valid string");
+        } else if (!is_string($encryptionKey)) {
+            throw new \InvalidArgumentException("The encryption key must be given as a string");
+        } else if (!in_array(static::$algorithm, openssl_get_cipher_methods(true))) {
+            throw new \InvalidArgumentException("The encryption algorithm is not supported");
+        }
+
         $encryptionKey = (strlen($encryptionKey) == 0) ? APIHACKFUL_ENCRYPTION_KEY : $encryptionKey;
 
+        //query for the IV length and generate the correct number of random bytes
         $ivLength = openssl_cipher_iv_length(static::$algorithm);
         $iv = openssl_random_pseudo_bytes($ivLength);
 
@@ -38,6 +54,10 @@ trait EncryptionTrait
             OPENSSL_RAW_DATA | OPENSSL_ZERO_PADDING,
             $iv
         );
+
+        if ($result === false) {
+            throw new \RuntimeException('Encryption error');
+        }
 
         return static::$algorithm . '$' . bin2hex($iv) . base64_encode($result);
     }
