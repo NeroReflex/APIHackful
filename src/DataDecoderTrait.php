@@ -21,6 +21,8 @@ namespace APIHackful;
  */
 trait DataDecoderTrait
 {
+    use DecryptionTrait;
+
     /**
      * Process data received by the server.
      *

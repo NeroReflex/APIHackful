@@ -14,30 +14,25 @@ limitations under the License.
 
 namespace APIHackful;
 
-/**
- * The data encoder trait.
- *
- * @author Denis Benato <beanto.denis96@gmail.com>
- */
-trait DataEncoderTrait
+trait EncryptionTrait
 {
-    use EncryptionTrait;
+    protected static $algorithm = 'aes-256-ctr';
 
-    /**
-     * Prepare data to be sent to the server.
-     *
-     * @param array $data the data to be passed to the RESTful server
-     * @return string the *unencoded* data to be passed to the RESTful server
-     */
-    public static function pack(array $data)
+    public static function encrypt($plain, $encryptionKey = "") : string
     {
-        //json encode the given array
-        $jsonEncoded = json_encode($data);
+        $encryptionKey = (strlen($encryptionKey) == 0) ? APIHACKFUL_ENCRYPTION_KEY : $encryptionKey;
 
-        //binary compress the generated json
-        $binaryCompressed = zlib_encode($jsonEncoded, ZLIB_ENCODING_GZIP, 9);
+        $ivLength = openssl_cipher_iv_length(static::$algorithm);
+        $iv = openssl_random_pseudo_bytes($ivLength);
 
-        //return the binary safe representation
-        return $binaryCompressed;
+        $result = openssl_encrypt(
+            $plain,
+            static::$algorithm,
+            base64_decode($encryptionKey),
+            OPENSSL_RAW_DATA | OPENSSL_ZERO_PADDING,
+            $iv
+        );
+
+        return static::$algorithm . '$' . bin2hex($iv) . base64_encode($result);
     }
 }
