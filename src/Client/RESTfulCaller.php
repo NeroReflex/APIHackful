@@ -97,7 +97,7 @@ class RESTfulCaller
         return $this->outData;
     }
 
-    public function execute() : array
+    public function execute()
     {
         //prepare the API call
         $handler = curl_init($this->getServer() . $this->getURI());
@@ -135,6 +135,6 @@ class RESTfulCaller
         curl_close($handler);
 
         //decode the API result
-        return static::unpack($result);
+        $this->outData = static::unpack($result);
     }
 }
